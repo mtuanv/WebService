@@ -53,45 +53,54 @@ namespace Webservice.API.Controllers
         // PUT: api/Feedbacks/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFeedback(int id, Feedback feedback)
+        [HttpPut]
+        //public async Task<IActionResult> PutFeedback(int id, Feedback feedback)
+        //{
+        //    if (id != feedback.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _context.Entry(feedback).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!FeedbackExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
+        public ActionResult<FeedbackClient> PutFeedback(FeedbackClient model)
         {
-            if (id != feedback.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(feedback).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FeedbackExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
+            return null;
+        };
         // POST: api/Feedbacks
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Feedback>> PostFeedback(Feedback feedback)
-        {
-            _context.Feedback.Add(feedback);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<Feedback>> PostFeedback(Feedback feedback)
+        //{
+        //    _context.Feedback.Add(feedback);
+        //    await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFeedback", new { id = feedback.Id }, feedback);
+        //    return CreatedAtAction("GetFeedback", new { id = feedback.Id }, feedback);
+        //}
+        [HttpPost]
+        public ActionResult<FeedbackClient> PostFeedback(FeedbackClient model)
+        {
+            return _feedbackService.Create(model);
         }
 
         // DELETE: api/Feedbacks/5

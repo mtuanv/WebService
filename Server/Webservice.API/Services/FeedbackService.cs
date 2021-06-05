@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Webservice.API.ClientSide.Models;
+using Webservice.API.DataAccess.Models;
 
 namespace Webservice.API.Services
 {
     public interface IFeedbackService
     {
         List<FeedbackClient> GetAll();
-        FeedbackClient GetById(int FeedbackId);
         FeedbackClient Create(FeedbackClient model);
         FeedbackClient Update(FeedbackClient model);
         bool Delete(FeedbackClient model);
@@ -24,7 +24,16 @@ namespace Webservice.API.Services
         }
         public FeedbackClient Create(FeedbackClient model)
         {
-            throw new NotImplementedException();
+            var feedback = new Feedback
+            {
+                Star = model.Star,
+                Comment = model.Comment,
+                AccountId = model.AccountId,
+                PlaceId = model.PlaceId,
+            };
+            _context.Feedback.Add(feedback);
+            _context.SaveChanges();
+            return model;
         }
         public bool Delete(FeedbackClient model)
         {
@@ -45,7 +54,16 @@ namespace Webservice.API.Services
         }
         public FeedbackClient Update(FeedbackClient model)
         {
-            throw new NotImplementedException();
+            Feedback feedback = null;
+            feedback = _context.Feedback.Where(x => x.Id == model.Id).FirstOrDefault();
+
+            //{
+            //    Star = model.Star,
+            //    Comment = model.Comment,
+            //    AccountId = model.AccountId,
+            //    PlaceId = model.PlaceId,
+            //};
+            return null;
         }
     }
 }
