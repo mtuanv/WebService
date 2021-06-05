@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Webservice.API.Services;
 
 namespace Webservice.API
 {
@@ -19,12 +20,15 @@ namespace Webservice.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //for local to local request-respond
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
-            services.AddDbContextPool<WebserviceContext>(op => op.UseSqlServer(Configuration.GetConnectionString("WebServiceContext")));
 
+            services.AddDbContextPool<WebserviceContext>(op => op.UseSqlServer(Configuration.GetConnectionString("WebServiceContext")));
+            services.AddOptions();
+            services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddControllers();
         }
 
