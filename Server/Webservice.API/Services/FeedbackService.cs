@@ -13,7 +13,7 @@ namespace Webservice.API.Services
         List<FeedbackClient> GetAll();
         FeedbackClient Create(FeedbackClient model);
         FeedbackClient Update(FeedbackClient model);
-        bool Delete(FeedbackClient model);
+        bool Delete(int feedback_Id);
     }
     public class FeedbackService : IFeedbackService
     {
@@ -30,14 +30,25 @@ namespace Webservice.API.Services
                 Comment = model.Comment,
                 AccountId = model.AccountId,
                 PlaceId = model.PlaceId,
+                CreatedBy = model.AccountId,
+                CreatedDate = DateTime.UtcNow,
             };
             _context.Feedback.Add(feedback);
             _context.SaveChanges();
             return model;
         }
-        public bool Delete(FeedbackClient model)
+        public bool Delete(int Id)
         {
-            throw new NotImplementedException();
+            Feedback feedback = null;
+            feedback = _context.Feedback.Where(x => x.Id == Id && !x.DeletedDate.HasValue).FirstOrDefault();
+            if (feedback == null)
+                throw new Exception("Feedback not found");
+            else
+            {
+                _context.Feedback.Remove(feedback);
+                _context.SaveChanges();
+                return true;
+            }
         }
         public List<FeedbackClient> GetAll()
         {
@@ -55,15 +66,20 @@ namespace Webservice.API.Services
         public FeedbackClient Update(FeedbackClient model)
         {
             Feedback feedback = null;
-            feedback = _context.Feedback.Where(x => x.Id == model.Id).FirstOrDefault();
-
-            //{
-            //    Star = model.Star,
-            //    Comment = model.Comment,
-            //    AccountId = model.AccountId,
-            //    PlaceId = model.PlaceId,
-            //};
-            return null;
+            feedback = _context.Feedback.Where(x => x.Id == model.Id && !x.DeletedDate.HasValue).FirstOrDefault();
+            if (feedback == null)
+                throw new Exception("Feedback not found");
+            else
+            {
+                feedback.Star = model.Star;
+                feedback.Comment = model.Comment;
+                feedback.AccountId = model.AccountId;
+                feedback.PlaceId = model.PlaceId;
+                feedback.ModifiedDate = DateTime.UtcNow;
+                feedback.ModifiedBy = model.AccountId;
+                _context.SaveChanges();
+            }
+            return model;
         }
     }
 }
