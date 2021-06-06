@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Webservice.API.ClientSide.Models;
-using Webservice.API.DataAccess.Models;
 using Webservice.API.Services;
 
 namespace Webservice.API.Controllers

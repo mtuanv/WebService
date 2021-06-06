@@ -1,39 +1,32 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
-    {
-        path: 'version',
-        loadChildren: () =>
-            import('modules/app-common/app-common-routing.module').then(
-                m => m.AppCommonRoutingModule
-            ),
-    },
-    {
-        path: '',
-        loadChildren: () =>
-            import('modules/blog/blog-routing.module').then(m => m.BlogRoutingModule),
-    },
-    {
-        path: 'auth',
-        loadChildren: () =>
-            import('modules/auth/auth-routing.module').then(m => m.AuthRoutingModule),
-    },
-    {
-        path: 'error',
-        loadChildren: () =>
-            import('modules/error/error-routing.module').then(m => m.ErrorRoutingModule),
-    },
-    {
-        path: '**',
-        pathMatch: 'full',
-        loadChildren: () =>
-            import('modules/error/error-routing.module').then(m => m.ErrorRoutingModule),
-    },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule)
+  },
+  {
+    path: 'editor',
+    loadChildren: () => import('./editor/editor.module').then(m => m.EditorModule)
+  },
+  {
+    path: 'article',
+    loadChildren: () => import('./article/article.module').then(m => m.ArticleModule)
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-    exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes, {
+    // preload all modules; optionally we could
+    // implement a custom preloading strategy for just some
+    // of the modules (PRs welcome 😉)
+    preloadingStrategy: PreloadAllModules
+  })],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}
