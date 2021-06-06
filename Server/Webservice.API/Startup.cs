@@ -29,6 +29,7 @@ namespace Webservice.API
             services.AddDbContextPool<WebserviceContext>(op => op.UseSqlServer(Configuration.GetConnectionString("WebServiceContext")));
             services.AddOptions();
             services.AddScoped<IFeedbackService, FeedbackService>();
+            services.AddScoped<IPlaceService, PlaceService>();
             services.AddControllers();
         }
 
