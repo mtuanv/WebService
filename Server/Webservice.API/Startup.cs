@@ -31,12 +31,12 @@ namespace Webservice.API
                 c.AddPolicy("AllowOrigin", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             });
 
-            services.AddDbContextPool<WebserviceContext>(op => op.UseSqlServer(Configuration.GetConnectionString("WebServiceContext")));
+            //services.AddDbContextPool<WebserviceContext>(op => op.UseSqlServer(Configuration.GetConnectionString("WebServiceContext")));
             services.AddOptions();
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IPlaceService, PlaceService>();
             services.AddControllers();
-            //services.AddDbContext<WebserviceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("WebServiceContext")));
+            services.AddDbContext<WebserviceContext>(options => options.UseSqlServer(Configuration.GetConnectionString("WebServiceContext")));
             // Adding Authentication  
             services.AddAuthentication(options =>
             {

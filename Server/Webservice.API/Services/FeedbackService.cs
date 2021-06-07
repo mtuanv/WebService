@@ -50,16 +50,16 @@ namespace Webservice.API.Services
                 return true;
             }
         }
-        public List<FeedbackClient> GetAll(int Id)
+        public List<FeedbackClient> GetAll(int PId)
         {
-            var ListFeedback = _context.Feedback.Where(x => x.PlaceId == Id).ToList();
+            var ListFeedback = _context.Feedback.Where(x => x.PlaceId == PId).ToList();
             var result = ListFeedback.Select(x => new FeedbackClient
             {
                 Id = x.Id,
                 Star = x.Star,
                 Comment = x.Comment,
                 AccountId = x.AccountId,
-                PlaceId = Id,
+                PlaceId = PId,
             }).ToList();
             return result;
         }

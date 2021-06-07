@@ -1,4 +1,6 @@
-﻿namespace Webservice.API.ClientSide.Models
+﻿using System;
+
+namespace Webservice.API.ClientSide.Models
 {
     public class FeedbackClient
     {
