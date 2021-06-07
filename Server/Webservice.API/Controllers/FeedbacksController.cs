@@ -20,9 +20,9 @@ namespace Webservice.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<FeedbackClient>> GetAllFeedback(int PlaceId)
+        public ActionResult<List<FeedbackClient>> GetAllFeedback(int id)
         {
-            return _feedbackService.GetAll(PlaceId);
+            return _feedbackService.GetAll(id);
         }
 
         [HttpPut]
