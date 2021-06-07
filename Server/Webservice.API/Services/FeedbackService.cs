@@ -10,7 +10,7 @@ namespace Webservice.API.Services
 {
     public interface IFeedbackService
     {
-        List<FeedbackClient> GetAll();
+        List<FeedbackClient> GetAll(int PlaceId);
         FeedbackClient Create(FeedbackClient model);
         FeedbackClient Update(FeedbackClient model);
         bool Delete(int feedback_Id);
@@ -50,16 +50,16 @@ namespace Webservice.API.Services
                 return true;
             }
         }
-        public List<FeedbackClient> GetAll()
+        public List<FeedbackClient> GetAll(int Id)
         {
-            var ListFeedback = _context.Feedback.ToList();
+            var ListFeedback = _context.Feedback.Where(x => x.PlaceId == Id).ToList();
             var result = ListFeedback.Select(x => new FeedbackClient
             {
                 Id = x.Id,
                 Star = x.Star,
                 Comment = x.Comment,
-                AccountId = x.Id,
-                PlaceId = x.Id,
+                AccountId = x.AccountId,
+                PlaceId = Id,
             }).ToList();
             return result;
         }
