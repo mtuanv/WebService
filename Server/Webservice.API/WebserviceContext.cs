@@ -9,6 +9,10 @@ namespace Webservice.API
 {
     public partial class WebserviceContext : DbContext
     {
+        public WebserviceContext()
+        {
+
+        }
         public WebserviceContext(DbContextOptions<WebserviceContext> options)
             : base(options)
         {
@@ -23,7 +27,7 @@ namespace Webservice.API
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=LAP-015\\SQLEXPRESS01;Database=webservice;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-VES4POV\\SQLEXPRESS;Database=webservice;Trusted_Connection=True;");
             }
         }
 
@@ -96,6 +100,7 @@ namespace Webservice.API
             });
 
             OnModelCreatingPartial(modelBuilder);
+           // base.OnModelCreating(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
