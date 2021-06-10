@@ -60,7 +60,7 @@ namespace Webservice.API.Services
                 throw new Exception("Place not found");
             else
             {
-                _context.Place.Remove(place);
+                place.DeletedDate = DateTime.UtcNow;
                 _context.SaveChanges();
                 return true;
             }
@@ -68,7 +68,7 @@ namespace Webservice.API.Services
 
         public List<PlaceClient> GetAll()
         {
-            var ListPlace = _context.Place.ToList();
+            var ListPlace = _context.Place.Where(x => !x.DeletedDate.HasValue).ToList();
             var result = ListPlace.Select(x => new PlaceClient
             {
                 Id = x.Id,
