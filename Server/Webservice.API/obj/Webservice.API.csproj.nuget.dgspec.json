@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\webservice\\Server\\Webservice.API\\Webservice.API.csproj": {}
+    "G:\\WS\\Server\\Webservice.API\\Webservice.API.csproj": {}
   },
   "projects": {
-    "D:\\webservice\\Server\\Webservice.API\\Webservice.API.csproj": {
+    "G:\\WS\\Server\\Webservice.API\\Webservice.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\webservice\\Server\\Webservice.API\\Webservice.API.csproj",
+        "projectUniqueName": "G:\\WS\\Server\\Webservice.API\\Webservice.API.csproj",
         "projectName": "Webservice.API",
-        "projectPath": "D:\\webservice\\Server\\Webservice.API\\Webservice.API.csproj",
+        "projectPath": "G:\\WS\\Server\\Webservice.API\\Webservice.API.csproj",
         "packagesPath": "C:\\Users\\hoang.thai.duong\\.nuget\\packages\\",
-        "outputPath": "D:\\webservice\\Server\\Webservice.API\\obj\\",
+        "outputPath": "G:\\WS\\Server\\Webservice.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\DevExpress 20.2\\Components\\Offline Packages",
@@ -47,6 +47,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[3.1.15, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.1.15, )"

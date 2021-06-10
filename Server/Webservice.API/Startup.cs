@@ -26,6 +26,7 @@ namespace Webservice.API
             var key = "this key is test my key";
             WebserviceContext context = new WebserviceContext();
             //for local to local request-respond
+
             services.AddCors(c =>
             {
                 c.AddPolicy("AllowOrigin", op => op.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
@@ -69,6 +70,7 @@ namespace Webservice.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(op => op.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
 
             app.UseRouting();

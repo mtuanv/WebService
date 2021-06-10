@@ -8,7 +8,7 @@ using Webservice.API.Services;
 
 namespace Webservice.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/places/{placeId:int}/[controller]")]
     [ApiController]
     public class FeedbacksController : ControllerBase
     {
@@ -19,28 +19,33 @@ namespace Webservice.API.Controllers
             _feedbackService = feedbackService;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult<List<FeedbackClient>> GetAllFeedback(int id)
+        [HttpGet]
+        public ActionResult<List<FeedbackClient>> GetAllFeedback(int placeId)
         {
-            return _feedbackService.GetAll(id);
+            return _feedbackService.GetAll(placeId);
         }
 
-        [HttpPut]
-        public ActionResult<FeedbackClient> PutFeedback(FeedbackClient model)
+        [HttpGet("{id:int}")]
+        public ActionResult<FeedbackClient> GetFeedbackById(int placeId, int id)
         {
-            return _feedbackService.Update(model);
+            return _feedbackService.GetById(placeId, id);
+        }
+        [HttpPut]
+        public ActionResult<FeedbackClient> PutFeedback(int placeId, FeedbackClient model)
+        {
+            return _feedbackService.Update(placeId, model);
         }
 
         [HttpPost]
-        public ActionResult<FeedbackClient> PostFeedback(FeedbackClient model)
+        public ActionResult<FeedbackClient> PostFeedback(int placeId, FeedbackClient model)
         {
-            return _feedbackService.Create(model);
+            return _feedbackService.Create(placeId, model);
         }
 
-        [HttpDelete("{id}")]
-        public ActionResult<bool> DeleteFeedback(int id)
+        [HttpDelete("{id:int}")]
+        public ActionResult<bool> DeleteFeedback(int placeId, int id)
         {
-            return _feedbackService.Delete(id);
+            return _feedbackService.Delete(placeId, id);
         }
     }
 }

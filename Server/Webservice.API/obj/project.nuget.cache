@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "EynSLqrDI8LYW4jbY6p+yexf2zEN7X0ujVOIM+z9fs3dhR4o5eyIrSpuM/KsR9eX+S/dsThmZxo4jpHIM8yrNA==",
+  "dgSpecHash": "Ot65fTeXbLSwnwqcYyYE+0tZULFS3y+NcSYjotmbsbIonFszwz/v95ynKxbCElsao+Eg1Cvx3En2y+xmVjY9Lg==",
   "success": true,
-  "projectFilePath": "D:\\webservice\\Server\\Webservice.API\\Webservice.API.csproj",
+  "projectFilePath": "G:\\WS\\Server\\Webservice.API\\Webservice.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\hoang.thai.duong\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.15\\microsoft.aspnetcore.authentication.jwtbearer.3.1.15.nupkg.sha512",
     "C:\\Users\\hoang.thai.duong\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\hoang.thai.duong\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\hoang.thai.duong\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",

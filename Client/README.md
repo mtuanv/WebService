@@ -1,69 +1,27 @@
-<p align="center">
-    <a href="https://github.com/hamzahamidi/angular-forum/actions?query=workflow%3ABuild">
-        <img src="https://github.com/hamzahamidi/angular-forum/workflows/Build/badge.svg" alt="Build Status">
-    </a>
-    <a href="https://github.com/hamzahamidi/angular-forum/releases/latest">
-        <img src="https://img.shields.io/github/release/hamzahamidi/angular-forum.svg" alt="Release"/>
-    </a>
-    <a href="https://app.netlify.com/sites/demo-forum/deploys">
-        <img src="https://api.netlify.com/api/v1/badges/9119af54-2449-4044-980d-2528a15fd2f4/deploy-status" alt="Build Status">
-    </a>
-    <a href="https://github.com/hamzahamidi/angular-forum/blob/main/LICENSE">
-        <img src="https://img.shields.io/github/license/hamzahamidi/angular-forum.svg" alt="License MIT">
-    </a>
-</p>
+# Forum
 
-> ### Angular project containing real world examples (CRUD, auth, advanced patterns, etc).
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.8.
 
-# ![Angular Forum App](logo.png)
-
-
-### [Demo](http://hamidihamza.com/angular-forum)&nbsp;&nbsp;&nbsp;&nbsp;
-
-This codebase was created to demonstrate a fully fledged application built with Angular that interacts with an actual backend server including CRUD operations, authentication, routing, pagination, and more.
-
-
-# Getting started
-
-Make sure you have the [Angular CLI](https://github.com/angular/angular-cli#installation) installed globally. 
-
-We use npm the default package manager of NodeJs & install the dependencies with `npm install`.
+## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-### Building the project
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Code scaffolding
 
-## Functionality overview
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-The example application is a social blogging site (i.e. a Medium.com clone). You can view a live demo over at http://hamidihamza.com/angular-forum/
+## Build
 
-**General functionality:**
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-- Authenticate users via JWT (login/signup pages + logout button on settings page)
-- CRU* users (sign up & settings page - no deleting required)
-- CRUD Articles
-- CR*D Comments on articles (no updating required)
-- GET and display paginated lists of articles
-- Favorite articles
-- Follow other users
+## Running unit tests
 
-**The general page breakdown looks like this:**
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-- Home page (URL: /#/ )
-    - List of tags
-    - List of articles pulled from either Feed, Global, or by Tag
-    - Pagination for list of articles
-- Sign in/Sign up pages (URL: /#/login, /#/register )
-    - Uses JWT (store the token in localStorage)
-    - Authentication can be easily switched to session/cookie based
-- Settings page (URL: /#/settings )
-- Editor page to create/edit articles (URL: /#/editor, /#/editor/article-slug-here )
-- Article page (URL: /#/article/article-slug-here )
-    - Delete article button (only shown to article's author)
-    - Render markdown from server client side
-    - Comments section at bottom of page
-    - Delete comment button (only shown to comment's author)
-- Profile page (URL: /#/profile/:username, /#/profile/:username/favorites )
-    - Show basic user info
-    - List of articles populated from author's created articles or author's favorited articles
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
