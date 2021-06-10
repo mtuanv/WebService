@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Webservice.API.ClientSide.Models;
@@ -13,37 +15,47 @@ namespace Webservice.API.Services
         List<PlaceClient> GetAll();
         List<PlaceClient> Search(string search_Key);
         PlaceClient GetPlaceById(int place_Id);
-        PlaceClient Create(PlaceClient model);
+        bool Create(PlaceClient model);
         bool Update(PlaceClient model);
         bool Delete(int place_Id);
     }
     public class PlaceService : IPlaceService
     {
         private readonly WebserviceContext _context;
-        public PlaceService(WebserviceContext context)
+        public static IWebHostEnvironment _environment;
+        public PlaceService(WebserviceContext context, IWebHostEnvironment environment)
         {
             _context = context;
+            _environment = environment;
         }
-        public PlaceClient Create(PlaceClient model)
+        public bool Create(PlaceClient model)
         {
-            var place = new Place
+            try
             {
-                Name = model.Name,
-                Description = model.Description,
-                Link = model.Link,
-                AccountId = model.AccountId,
-                CreatedBy = model.AccountId,
-                CreatedDate = DateTime.UtcNow,
-            };
-            _context.Place.Add(place);
-            _context.SaveChanges();
-            return model;
+                var place = new Place
+                {
+                    Name = model.Name,
+                    Description = model.Description,
+                    Link = model.Link,
+                    AccountId = model.AccountId,
+                    CreatedBy = model.AccountId,
+                    CreatedDate = DateTime.UtcNow,
+                };
+                _context.Place.Add(place);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool Delete(int Id)
         {
             Place place = null;
             place = _context.Place.Where(x => x.Id == Id && !x.DeletedDate.HasValue).FirstOrDefault();
+            File.Delete(_environment.WebRootPath + place.Link);
             if (place == null)
                 throw new Exception("Place not found");
             else
@@ -112,6 +124,7 @@ namespace Webservice.API.Services
         {
             Place place = null;
             place = _context.Place.Where(x => x.Id == model.Id && !x.DeletedDate.HasValue).FirstOrDefault();
+            File.Delete(_environment.WebRootPath + place.Link);
             if (place == null)
                 throw new Exception("Place not found");
             else
