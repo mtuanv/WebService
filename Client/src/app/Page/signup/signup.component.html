@@ -1,0 +1,18 @@
+<div class="modal-wrap">
+    <div class="modal-bodies">
+        <div class="modal-body modal-body-step-1 is-showing">
+            <div class="title">Sign Up</div>
+            <div class="description">Hello there, Register Form</div>
+            <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+                <input type="text" name="Username" id="username" placeholder="Username*" ngModel />
+                <input type="email" name="Email" id="email" placeholder="E-Mail*" ngModel />
+                <input type="password" name="Password" id="password" placeholder="Password*" ngModel />
+
+                <div class="text-center">
+                    <button class="button" type="submit">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>

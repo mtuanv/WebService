@@ -1,0 +1,23 @@
+<div class="modal-wrap">
+    <div class="modal-bodies">
+        <div class="modal-body modal-body-step-1 is-showing">
+            <div class="title">Log In</div>
+            <div class="description">Hello there, Log In</div>
+            <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+                <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password</div>
+                <input type="text" id="username" name="Username" placeholder="Username" ngModel required autofocus />
+                <input type="password" id="password" name="Password" placeholder="Password" ngModel required />
+                <div class="text-center">
+                    <button class="button" type="submit" style="border: nones;">LOG IN
+                    </button>
+                </div>
+            </form>
+            <div class="text-center" style="margin-top: 20px;">
+                <a [routerLink]="['/signup']" routerLinkActive="router-link-active">
+                    <div>Create an account</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
