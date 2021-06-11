@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -32,25 +33,24 @@ namespace WebService.Controllers
             public IFormFile Files { get; set; }
             public string UserId { get; set; }
         }
-
         [HttpGet]
         public ActionResult<List<PlaceClient>> GetAllPlace()
         {
             return _placeService.GetAll();
         }
-
+        [Authorize]
         [HttpGet("{id}")]
         public ActionResult<PlaceClient> GetPlaceById(int id)
         {
             return _placeService.GetPlaceById(id);
         }
-
+        [Authorize]
         [HttpGet("search/{key}")]
         public ActionResult<List<PlaceClient>> SearchPlace(string key)
         {
             return _placeService.Search(key);
         }
-
+        [Authorize]
         [HttpPut]
         public async Task<bool> PutPlace(PlaceClient model/*[FromForm] FileUploadAPI objFile*/)
         {
@@ -75,7 +75,7 @@ namespace WebService.Controllers
             //}
             return _placeService.Update(model);
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<bool> PostPlace(PlaceClient model/*[FromForm] FileUploadAPI objFile*/)
         {
@@ -100,7 +100,7 @@ namespace WebService.Controllers
             //}
             return _placeService.Create(model);
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult<bool> DeletePlace(int id)
         {
