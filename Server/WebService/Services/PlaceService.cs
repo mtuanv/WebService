@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebService.ClientSide.Models;
@@ -13,8 +15,8 @@ namespace WebService.Services
         List<PlaceClient> GetAll();
         List<PlaceClient> Search(string search_Key);
         PlaceClient GetPlaceById(int place_Id);
-        bool Create(PlaceClient model);
-        bool Update(PlaceClient model);
+        bool Create([FromForm] PlaceClient model);
+        bool Update([FromForm] PlaceClient model);
         bool Delete(int place_Id);
     }
     public class PlaceService : IPlaceService
@@ -26,7 +28,7 @@ namespace WebService.Services
             _context = context;
             _environment = environment;
         }
-        public bool Create(PlaceClient model)
+        public bool Create([FromForm] PlaceClient model)
         {
             try
             {
@@ -35,11 +37,29 @@ namespace WebService.Services
                     Title = model.Title,
                     Content = model.Content,
                     UserId = model.UserId,
-                    //CreatedBy = model.AccountId,
-                    //CreatedDate = DateTime.UtcNow,
                 };
                 _context.Place.Add(place);
                 _context.SaveChanges();
+                foreach (var img in model.Files)
+                {
+                    string fileName = string.Concat(Path.GetFileNameWithoutExtension(img.FileName),
+                                      DateTime.UtcNow.ToString("yyyyMMddHHmmssfff"),
+                                      Path.GetExtension(img.FileName));
+                    using (FileStream fileStream = System.IO.File.Create(_environment.WebRootPath + "\\Upload\\" + fileName))
+                    {
+                        img.CopyTo(fileStream);
+                        fileStream.Flush();
+                        string path = "\\Upload\\" + fileName;
+                        int placeid = _context.Place.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                        var image = new Image
+                        {
+                            Path = path,
+                            PlaceId = placeid
+                        };
+                        _context.Image.Add(image);
+                        _context.SaveChanges();
+                    }
+                }
                 return true;
             }
             catch
@@ -52,11 +72,22 @@ namespace WebService.Services
         {
             Place place = null;
             place = _context.Place.Where(x => x.Id == Id).FirstOrDefault();
-            //File.Delete(_environment.WebRootPath + place.Link);
             if (place == null)
                 throw new Exception("Place not found");
             else
             {
+                List<Feedback> lstFeedback = _context.Feedback.Where(x => x.PlaceId == Id).Select(x => x).ToList();
+                List<Image> lstImage = _context.Image.Where(x => x.PlaceId == Id).Select(x => x).ToList();
+                foreach (var fb in lstFeedback)
+                {
+                    _context.Remove(fb);
+                    _context.SaveChanges();
+                }
+                foreach (var img in lstImage)
+                {
+                    File.Delete(_environment.WebRootPath + img.Path);
+                    _context.Remove(img);
+                }
                 _context.Remove(place);
                 _context.SaveChanges();
                 return true;
@@ -113,20 +144,53 @@ namespace WebService.Services
             }
         }
 
-        public bool Update(PlaceClient model)
+        public bool Update([FromForm] PlaceClient model)
         {
-            Place place = null;
-            place = _context.Place.Where(x => x.Id == model.Id).FirstOrDefault();
-            //File.Delete(_environment.WebRootPath + place.Link);
-            if (place == null)
-                throw new Exception("Place not found");
-            else
+            try
             {
-                place.Title = model.Title;
-                place.Content = model.Content;
-                place.UserId = model.UserId;
-                _context.SaveChanges();
-                return true;
+                Place place = new Place();
+                place = _context.Place.Where(x => x.Id == model.Id).FirstOrDefault();
+                if (place == null)
+                    throw new Exception("Place not found");
+                else
+                {
+                    place.Title = model.Title;
+                    place.Content = model.Content;
+                    place.UserId = model.UserId;
+                    _context.SaveChanges();
+                    List<Image> lstImage = _context.Image.Where(x => x.PlaceId == model.Id).Select(x=>x).ToList();
+                    foreach(var img in lstImage)
+                    {
+                        File.Delete(_environment.WebRootPath + img.Path);
+                        _context.Remove(img);
+                        _context.SaveChanges();
+                    }
+                    foreach (var img in model.Files)
+                    {
+                        string fileName = string.Concat(Path.GetFileNameWithoutExtension(img.FileName),
+                                          DateTime.UtcNow.ToString("yyyyMMddHHmmssfff"),
+                                          Path.GetExtension(img.FileName));
+                        using (FileStream fileStream = System.IO.File.Create(_environment.WebRootPath + "\\Upload\\" + fileName))
+                        {
+                            img.CopyTo(fileStream);
+                            fileStream.Flush();
+                            string path = "\\Upload\\" + fileName;
+                            int placeid = _context.Place.OrderByDescending(x => x.Id).FirstOrDefault().Id;
+                            var image = new Image
+                            {
+                                Path = path,
+                                PlaceId = placeid
+                            };
+                            _context.Image.Add(image);
+                            _context.SaveChanges();
+                        }
+                    }
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
     }

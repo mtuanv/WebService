@@ -12,6 +12,7 @@ namespace WebService.DataAccess.Models
         public Place()
         {
             Feedback = new HashSet<Feedback>();
+            Image = new HashSet<Image>();
         }
 
         public int Id { get; set; }
@@ -21,5 +22,6 @@ namespace WebService.DataAccess.Models
 
         public virtual AspNetUsers User { get; set; }
         public virtual ICollection<Feedback> Feedback { get; set; }
+        public virtual ICollection<Image> Image { get; set; }
     }
 }
