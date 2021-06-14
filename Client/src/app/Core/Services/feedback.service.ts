@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-var url = 'https://localhost:44360/api/place';
+var url = 'https://localhost:44379/api/place';
 var currentData = 'feedback';
 @Injectable({
   providedIn: 'root',

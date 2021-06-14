@@ -119,7 +119,6 @@ namespace Travel.WebApi.Services
                 return true;
             }
         }
-
         public bool ConvertBase64ToImage(string fileBase64, string filePath)
         {
             try

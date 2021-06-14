@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Place } from '../Models/Place.model';
 
-export const url = 'https://localhost:44360/api';
+export const url = 'https://localhost:44379/api';
 var currentData = 'place';
 @Injectable({
   providedIn: 'root',

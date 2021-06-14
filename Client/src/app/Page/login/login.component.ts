@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       password: form.value.Password,
     };
     this.http
-      .post('https://localhost:44360/api/authenticate/login', taikhoan)
+      .post('https://localhost:44379/api/user/login', taikhoan)
       .subscribe(
         (res) => {
           const token = (<any>res).token;

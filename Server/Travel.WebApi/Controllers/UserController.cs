@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Travel.WebApi.ClientSide.Authentication.Helpers;
 using Travel.WebApi.ClientSide.Authentication.Models;
 using Travel.WebApi.ClientSide.Models;
 using Travel.WebApi.Services;
@@ -11,6 +12,7 @@ namespace Travel.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
         private readonly IUserService _userService;
 
         public UserController(IUserService userService)
@@ -19,7 +21,7 @@ namespace Travel.WebApi.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login(AuthenticateRequest model)
+        public IActionResult Login(LoginModel model)
         {
             var response = _userService.Login(model);
 
@@ -28,11 +30,27 @@ namespace Travel.WebApi.Controllers
 
             return Ok(response);
         }
+        [HttpPost("register")]
+        public IActionResult Register(RegisterModel model)
+        {
+            try
+            {
+                // create user
+                _userService.Register(model);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
 
-        [Authorize]
+        [ClientSide.Authentication.Helpers.Authorize]
         [HttpGet]
         public List<UserClient> GetAll()
         {
+            var a = HttpContext.Request;
             return _userService.GetAll();
         }
     }

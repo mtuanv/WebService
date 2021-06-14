@@ -18,7 +18,8 @@ namespace Travel.WebApi.Services
 {
     public interface IUserService
     {
-        AuthenticateResponse Login(AuthenticateRequest model);
+        ResponseModel Login(LoginModel model);
+        bool Register(RegisterModel model);
         List<UserClient> GetAll();
         UserClient GetById(int Id);
     }
@@ -34,7 +35,7 @@ namespace Travel.WebApi.Services
             _appSettings = appSettings.Value;
         }
 
-        public AuthenticateResponse Login(AuthenticateRequest model)
+        public ResponseModel Login(LoginModel model)
         {
             var user = _userRepository.GetAll().Where(x => x.Username == model.Username && x.Password == model.Password).SingleOrDefault();
 
@@ -44,7 +45,37 @@ namespace Travel.WebApi.Services
             // authentication successful so generate jwt token
             var token = generateJwtToken(user);
 
-            return new AuthenticateResponse(user, token);
+            return new ResponseModel(user, token);
+        }
+
+        public bool Register(RegisterModel model)
+        {
+            // validation
+            if (string.IsNullOrWhiteSpace(model.Username))
+                throw new AppException("Username is required");
+            if (string.IsNullOrWhiteSpace(model.Password))
+                throw new AppException("Password is required");
+            if (string.IsNullOrWhiteSpace(model.Email))
+                throw new AppException("Email is required");
+            if (_userRepository.GetAll().Any(x => x.Username == model.Username))
+                throw new AppException("Username " + model.Username + " is already taken");
+            if (_userRepository.GetAll().Any(x => x.Email == model.Email))
+                throw new AppException("Email " + model.Email + " is already taken");
+            try
+            {
+                var user = new Users()
+                {
+                    Username = model.Username,
+                    Password = model.Password,
+                    Email = model.Email,
+                };
+                _userRepository.Insert(user);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public List<UserClient> GetAll()

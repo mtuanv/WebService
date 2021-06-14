@@ -2,7 +2,7 @@
 
 namespace Travel.WebApi.ClientSide.Authentication.Models
 {
-    public class AuthenticateResponse
+    public class ResponseModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -12,7 +12,7 @@ namespace Travel.WebApi.ClientSide.Authentication.Models
         public string Token { get; set; }
 
 
-        public AuthenticateResponse(Users user, string token)
+        public ResponseModel(Users user, string token)
         {
             Id = user.Id;
             FirstName = user.FirstName;

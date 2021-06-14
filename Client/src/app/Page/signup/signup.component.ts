@@ -20,7 +20,7 @@ export class SignupComponent implements OnInit {
       password: form.value.Password,
     };
     this.http
-      .post('https://localhost:44360/api/authenticate/register', taikhoan)
+      .post('https://localhost:44379/api/user/register', taikhoan)
       .subscribe(
         (res: any) => {
           if (res.succeeded) {
