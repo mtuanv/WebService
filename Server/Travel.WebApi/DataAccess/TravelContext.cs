@@ -15,7 +15,6 @@ namespace Travel.WebApi.DataAccess
         }
 
         public virtual DbSet<Feedbacks> Feedbacks { get; set; }
-        public virtual DbSet<Images> Images { get; set; }
         public virtual DbSet<Places> Places { get; set; }
         public virtual DbSet<Users> Users { get; set; }
 
@@ -46,19 +45,6 @@ namespace Travel.WebApi.DataAccess
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Feedbacks__UserI__2E1BDC42");
-            });
-
-            modelBuilder.Entity<Images>(entity =>
-            {
-                entity.Property(e => e.Path)
-                    .IsRequired()
-                    .HasMaxLength(500);
-
-                entity.HasOne(d => d.Place)
-                    .WithMany(p => p.Images)
-                    .HasForeignKey(d => d.PlaceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Images__PlaceId__2B3F6F97");
             });
 
             modelBuilder.Entity<Places>(entity =>
